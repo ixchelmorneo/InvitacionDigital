@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación a Evento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('imagenes/fondo3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: repeat;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+    }
+    #angel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: transparent;
+      z-index: 20;
+      transition: opacity 3s ease, transform 3s ease;
+    }
+    #angel {
+      width: 80vw;
+      max-width: 500px;
+      opacity: 1;
+      transition: transform 3s ease, opacity 3s ease;
+    }
+    .reduce-size {
+      transform: scale(0.7) translateY(-200px);
+      opacity: 0.3;
+    }
+    .image {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: all 1s ease;
+      width: 300px;
+      z-index: 10;
+    }
+    #left-image {
+      left: -50%;
+    }
+    #right-image {
+      width: 190px;
+      height: auto;
+      right: -50%;
+    }
+    .enter-center {
+      top: 446px;
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+    #left-image.enter-center {
+      left: 5%;
+    }
+    #right-image.enter-center {
+      right: 17%;
+    }
+    .container {
+      max-width: 90%;
+      margin: 20px auto;
+      background-color: rgba(255, 255, 255, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 1s ease, transform 2s ease;
+      z-index: 30;
+      position: relative;
+      overflow: hidden;
+    }
+    .detalles {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 206px;
+    }
+    .titulo-detalles {
+      color: #D2B48C;
+      font-style: italic;
+      text-align: center;
+      font-size: 1.8em;
+    }
+    .move-container {
+      transform: translateY(680px);
+    }
+    .header {
+      background-color: rgba(255, 175, 250, 0.23);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-radius: 20px;
+      margin-top: 198px;
+    }
+    .countdown {
+      font-size: 1.5em;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    
+    .custom-body {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background-color: #fffae3;
+        text-align: center;
+        color: #444;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .main-container {
+        background-color: #fff5d9;
+        border-radius: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+        padding: 20px;
+        max-width: 90%;
+        border: 2px solid #ffb6c1;
+        margin-top: 200px;
+    }
+    .countdown-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #ffb6c1;
+        text-shadow: 1px 1px 2px #fff;
+    }
+    .countdown-timer {
+        background-color: #ffb6c1;
+        border-radius: 20px;
+        padding: 0px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 11px;
+    }
+    .timer-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 10px;
+    }
+    .timer span {
+        font-size: 20px;
+        color: #fff;
+    }
+    .timer label {
+        font-size: 16px;
+        color: #fff;
+        display: block;
+    }
+    .colon {
+        font-size: 20px;
+        color: #fff;
+    }
+    .event-details {
+        font-size: 16px;
+        margin: 20px 0;
+    }
+    .highlight-info {
+        color: #ff69b4;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .event-location {
+        font-size: 16px;
+        margin-top: 20px;
+        color: #8b0000;
+        position: relative;
+        display: inline-block;
+    }
+    .event-location::before {
+        content: '📍';
+        font-size: 20px;
+        position: absolute;
+        left: -25px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #ffb6c1;
+        padding: 10px;
+        border-radius: 50%;
+    }
+    .location-slider {
+        position: relative;
+        background-color: #ffb6c1;
+        border-radius: 50px;
+        padding: 6px 53px;
+        margin-top: 20px;
+        cursor: pointer;
+        width: 235px;
+        height: 43px;
+        overflow: hidden;
+    }
+    .location-slider::after {
+        content: '📍';
+        font-size: 20px;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #fff;
+        padding: 5px;
+        border-radius: 50%;
+        transition: left 0.3s ease;
+    }
+    .location-slider::before {
+        content: 'Haz click para ver ubicación';
+        font-size: 16px;
+        color: white;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .location-slider:hover::after {
+        left: 180px;
+    }
+    .event-date {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .month-text {
+        font-size: 22px;
+        color: #444;
+    }
+    .day-time-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 20px;
+        color: #444;
+        margin-top: 10px;
+    }
+    .day-time-info .day {
+        font-size: 32px;
+        font-weight: bold;
+        color: #ff69b4;
+        text-shadow: 1px 1px 2px #fff;
+    }
+    .divider {
+        width: 100%;
+        height: 2px;
+        background-color: #ff69b4;
+        margin: 10px 0;
+    }
+    @media (min-width: 600px) {
+        .timer span {
+            font-size: 28px;
+        }
+        .timer label, .colon {
+            font-size: 18px;
+        }
+        .event-details {
+            font-size: 20px;
+        }
+        .highlight-info {
+            font-size: 26px;
+        }
+        .event-location {
+            font-size: 18px;
+        }
+        .month-text {
+            font-size: 26px;
+        }
+        .day-time-info {
+            font-size: 24px;
+        }
+        .day-time-info .day {
+            font-size: 40px;
+        }
+    }
+
+
+
+/* Contenedor de la imagen con degradado */
+.image-gradient-container {
+      position: relative;
+      width: 300px; /* Ajusta el tamaño a tu preferencia */
+      height: 400px;
+      overflow: hidden;
+    }
+
+    /* Imagen con efecto de degradado */
+    .image-gradient-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.9; /* Nivel de transparencia para mezclar con el degradado */
+    }
+
+    /* Fondo degradado */
+    .image-gradient-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      z-index: 1;
+    }
+
+    /* Contenido sobre la imagen, opcional */
+    .image-text {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: #444;
+      z-index: 2;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+/* Btn de confirmacion */
+
+#checkmark {
+    display: none;
+    font-size: 2em;
+    color: green;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#checkmark.show {
+    display: inline;
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+/* Estilos de las nubes */
+
+.nube-derecha-arriba {
+    position: relative; /* asegura que el contenedor esté posicionado */
+    width: 100%; /* o el ancho específico que desees */
+    height: auto; /* ajusta la altura según tu diseño */
+}
+
+.nube-derecha-arriba img {
+    position: absolute;
+    top: -158px; /* ajusta el valor según la posición vertical deseada */
+    right: -134px; /* ajusta el valor según la posición horizontal deseada */
+    z-index: 1; /* asegura que esté por encima de otros elementos */
+    width: 381px; /* ajusta el tamaño según tus necesidades */
+}
+/* Estilos de Pastel */
+
+.pastel {
+    position: relative; /* asegura que el contenedor esté posicionado */
+    width: 100%; /* o el ancho específico que desees */
+    height: auto; /* ajusta la altura según tu diseño */
+}
+
+.pastel img {
+    position: absolute;
+    top: -47px; /* ajusta el valor según la posición vertical deseada */
+    right: -67px; /* ajusta el valor según la posición horizontal deseada */
+    z-index: 1; /* asegura que esté por encima de otros elementos */
+    width: 381px; /* ajusta el tamaño según tus necesidades */
+}
+
+.nube-izquierda-arriba {
+    position: relative; /* Asegura que el contenedor esté posicionado */
+    width: 100%; /* Ajusta el ancho si es necesario */
+    height: auto; /* Ajusta la altura según el diseño */
+}
+
+.nube-izquierda-arriba img {
+    position: absolute;
+    top: 125px; /* Ajusta el valor para colocarla en la posición vertical deseada */
+    left: -27px; /* Posiciona la imagen a la izquierda */
+    z-index: 1; /* Coloca la imagen encima de otros elementos si es necesario */
+    width: 200px; /* Ajusta el tamaño según tus necesidades */
+}
+
+  </style>
+</head>
+<body>
+  <div id="angel-container">
+    <img id="angel" src="imagenes/angel.png" alt="Ángel de Bienvenida" />
+  </div>
+
+  <!-- Contenedor de la invitación y las imágenes -->
+  <div class="container" id="main-content">
+    <!-- Imágenes de los lados -->
+    <img id="left-image" class="image" src="imagenes/circuloDos.PNG" alt="Imagen Izquierda">
+    <img id="right-image" class="image" src="imagenes/vane.png" alt="Imagen Derecha">
+
+    <div class="header">
+      <h3>Mi primera comunión Vanessa y Mi Cumpleaños Kailani</h3>
+    </div>
+
+    
+      <!-- Detalles del evento y cuenta regresiva -->
+      
+       <body class="custom-body">
+    <div class="main-container">
+        <div class="countdown-title">Faltan...</div>
+        <div class="countdown-timer" id="countdown">
+            <div class="timer-item">
+                <span id="days">10</span>
+                <label>días</label>
+            </div>
+            <div class="colon">:</div>
+            <div class="timer-item">
+                <span id="hours">18</span>
+                <label>horas</label>
+            </div>
+            <div class="colon">:</div>
+            <div class="timer-item">
+                <span id="minutes">21</span>
+                <label>minutos</label>
+            </div>
+            <div class="colon">:</div>
+            <div class="timer-item">
+                <span id="seconds">28</span>
+                <label>segundos</label>
+            </div>
+        </div>
+        <div class="event-details">
+            <div class="event-date">
+                <div class="month-text">Diciembre</div>
+                <div class="day-time-info">
+                    <span>Sábado</span>
+                    <span class="day">7</span>
+                    <span>1:00 p.m.</span>
+                </div>
+                <div class="divider"></div>
+            </div>
+        </div>
+        <p>Mis Padres:</p>
+        <p>Carlos Cesar Moreno Navarrete</p><p>Elizabeth Onofre Cesar</p>
+        <p>Mi Padrino:</p>
+        <p>Ixchel Giuseppe Moreno Navarrete</p>
+        <div class="divider"></div>
+        <span>Capilla del señor de la misericordia</span>
+        <a href="https://www.google.com/maps?q=19.313346, -98.898964" target="_blank">
+            <div class="location-slider"></div>
+        </a>
+    </div>
+    <div>Después de la ceremonia, será muy especial para nosotros que nos acompañen a celebrar mi Primera Comunión y el cumpleaños de Kailani. Su presencia llenará este día de alegría y amor, y queremos compartir estos momentos tan importantes con ustedes</div>
+    <div>
+        <div class="image-gradient-container">
+            <img src="imagenes/globos.png" alt="Imagen con Efecto Degradado">
+           
+          </div>
+          
+    </div>
+
+    <!-- nubes -->
+    <div class="nube-derecha-arriba">
+      <img src="imagenes/nube_derecha_arriba.png" alt="Nube en la parte superior derecha">
+  </div>
+<!-- Pastel -->
+<div class="pastel">
+  <img src="imagenes/pastel.png" alt="Pastel">
+</div>
+
+  <div class="nube-izquierda-arriba">
+    <img src="imagenes/nubes_izquierda.png" alt="Nube en la parte superior izquierda">
+</div>
+
+    <div>
+        <div class="main-container">
+            
+            <div class="event-details">
+                <div class="event-date">
+                    <div class="month-text"><h3>Nuestra celebración</h3></div>
+
+
+
+                    
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    <span>Se llevara acabo a las:</span>
+
+                        <span>4:00 p.m.</span>
+                    </div>
+                    <div class="divider"></div>
+                    <span>Calle 5, manzana 4,Lt 20</span>
+            <span>Col. José López Portillo</span>
+            <span>Entre calle esperanza y calle 17</span>
+            <span>Del. Iztapalapa</span>
+            <a href="https://www.google.com/maps?q=19.3104941,-99.0801384" target="_blank">
+            <div class="location-slider"></div>
+                </div>
+            </div>
+            
+        </a>
+        </div>
+        <input type="number" id="tentacles" name="tentacles" min="1" max="20" />
+        <button id="confirmButton">Confirmar Asistencia</button>
+<span id="checkmark">✔️</span>
+    </div>
+</body>
+
+      
+    
+  </div>
+
+  <script>
+    window.onload = function() {
+      const angelContainer = document.getElementById('angel-container');
+      const angel = document.getElementById('angel');
+      const mainContent = document.getElementById('main-content');
+      const leftImage = document.getElementById('left-image');
+      const rightImage = document.getElementById('right-image');
+
+      // Animación del ángel
+      setTimeout(() => {
+        angelContainer.classList.add('reduce-size');
+        angel.classList.add('reduce-size');
+      }, 1000);
+
+      // Mostrar el contenido principal después de la transición
+      setTimeout(() => {
+        mainContent.style.opacity = '1';
+        mainContent.style.display = 'block';
+        document.body.style.overflow = 'auto';
+
+        // Iniciar animación de las imágenes laterales
+        leftImage.classList.add('enter-center');
+        rightImage.classList.add('enter-center');
+      }, 5000);
+
+      // Mover el contenedor y las imágenes junto con él después de la animación
+      setTimeout(() => {
+        mainContent.classList.add('move-container');
+      }, 4000);
+    };
+
+    const eventDate = new Date("December 7, 2024 19:00:00").getTime();
+    const countdownTimer = setInterval(function() {
+      const now = new Date().getTime();
+      const timeLeft = eventDate - now;
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerHTML = days;
+  document.getElementById("hours").innerHTML = hours;
+  document.getElementById("minutes").innerHTML = minutes;
+  document.getElementById("seconds").innerHTML = seconds;
+
+      if (timeLeft < 0) {
+        clearInterval(countdownTimer);
+        document.getElementById("countdown").innerHTML = "¡El evento ha comenzado!";
+      }
+    }, 1000);
+    document.getElementById("confirmButton").addEventListener("click", async () => {
+  try {
+      const response = await fetch('/api/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+      });
+      if (response.ok) {
+          const checkmark = document.getElementById("checkmark");
+          checkmark.classList.add("show");
+
+          // Oculta el botón después de la confirmación si lo deseas
+          document.getElementById("confirmButton").style.display = 'none';
+
+          // Puedes hacer que la paloma desaparezca después de unos segundos
+          setTimeout(() => {
+              checkmark.classList.remove("show");
+          }, 2000);
+      } else {
+          console.error("Error al confirmar asistencia");
+      }
+  } catch (error) {
+      console.error("Error en la solicitud:", error);
+  }
+});
+    
+  </script>
+</body>
+</html>
+
+
